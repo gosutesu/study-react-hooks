@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useCallback } from 'react';
 import './App.css';
+import { Input } from './input';
 
 function App() {
+  console.log('render app');
+  const [name,setName] = useState('name');
+  const [address,setAddress] = useState('address');
+
+  // setNameをキャッシュすることでsetNameに変更がない場合のレンダリングを防止する。
+  const onClickWithName = useCallback((e: any) => {
+    setName(e.target.value);
+  },[setName]);
+
+  // setAddressをキャッシュすることでsetAddressに変更がない場合のレンダリングを防止する。
+  const onClickWithAddress = useCallback((e:any) => {
+    setAddress(e.target.value);
+  },[setAddress])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Input value= {name} onChange={onClickWithName} name={name} />
+      <Input value= {address} onChange={onClickWithAddress} name={address} />
     </div>
   );
 }
